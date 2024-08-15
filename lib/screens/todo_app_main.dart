@@ -30,19 +30,19 @@ class _MyHomePageState extends State<TodoHomePage> {
   // final myController = TextEditingController();
   String ? taskTitle;
   List<String> taskTitleArray = [];
+  List<String> taskDetailArray = [];
 
-  Future<void> _showMyDialog(BuildContext context) async {
+  Future<void> _showMyDialog(BuildContext context, int index) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // User must tap a button to dismiss the dialog.
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Warning'),
-          content: const SingleChildScrollView(
+          title: const Text('Details'),
+          content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to continue?'),
+                Text(taskDetailArray[index]),
               ],
             ),
           ),
@@ -125,7 +125,7 @@ class _MyHomePageState extends State<TodoHomePage> {
                     padding: EdgeInsets.only(top: 2.0),
                     highlightColor: Color.fromARGB(50, 0, 0, 0),
                     onPressed: () {
-                      _showMyDialog(context);
+                      _showMyDialog(context, index);
                     },
                   ),
                   Center(
@@ -167,8 +167,8 @@ class _MyHomePageState extends State<TodoHomePage> {
             );
             if (result != null) {
               setState(() {
-                taskTitleArray.add(result);
-
+                taskTitleArray.add(result.textField1Value);
+                taskDetailArray.add(result.textField2Value);
               });
             }
           },

@@ -10,6 +10,8 @@ class AddTask extends StatefulWidget {
 
 class _MyWidgetState extends State<AddTask> {
   final TextEditingController myController = TextEditingController();
+  final TextEditingController myController1 = TextEditingController();
+  TextData? _textData;
 
   @override
   void dispose() {
@@ -61,6 +63,7 @@ class _MyWidgetState extends State<AddTask> {
                   hintText: 'client meeting to discuss the requirements',
                   hintFadeDuration: Durations.extralong3,
                 ),
+                controller: myController1,
               ),
             ),
             Padding(
@@ -69,7 +72,10 @@ class _MyWidgetState extends State<AddTask> {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context, myController.text);
+                    _textData = TextData(myController.text, myController1.text);
+                    Navigator.pop(
+                      context, _textData
+                    );
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(16),
@@ -86,4 +92,10 @@ class _MyWidgetState extends State<AddTask> {
       ),
     );
   }
+}
+class TextData {
+  final String textField1Value;
+  final String textField2Value;
+
+  TextData(this.textField1Value, this.textField2Value);
 }
