@@ -8,6 +8,7 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF9395D3)),
         useMaterial3: true,
@@ -27,7 +28,6 @@ class TodoHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<TodoHomePage> {
-  // final myController = TextEditingController();
   String ? taskTitle;
   List<String> taskTitleArray = [];
   List<String> taskDetailArray = [];
@@ -38,7 +38,10 @@ class _MyHomePageState extends State<TodoHomePage> {
       barrierDismissible: false, // User must tap a button to dismiss the dialog.
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Details'),
+          title: const Text(
+            'Details',
+            style: TextStyle(fontSize: 20),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -53,40 +56,19 @@ class _MyHomePageState extends State<TodoHomePage> {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: const Text('Continue'),
-              onPressed: () {
-                // Perform some action if needed
-                Navigator.of(context).pop();
-              },
-            ),
           ],
         );
       },
     );
   }
 
-  // @override
-  // void dispose() {
-  //   // Clean up the controller when the widget is disposed.
-  //   myController.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.indigo[100],
       appBar: AppBar(
-        // leading: Builder(
-        //   builder: (BuildContext context){
-        //     return IconButton(
-        //       icon: const Icon(Icons.menu),
-        //       onPressed: () { Scaffold.of(context).openDrawer(); },
-        //       tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        //     );
-        //   }
-        // ),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Color(0xFF9395D3),
+        centerTitle: true,
         title: Text(widget.title),
         actions: [
           IconButton(
@@ -96,7 +78,6 @@ class _MyHomePageState extends State<TodoHomePage> {
             },
           ),
         ],
-        elevation: 20,
       ),
       body: ListView.builder(
         itemCount: taskTitleArray.length,
@@ -109,17 +90,24 @@ class _MyHomePageState extends State<TodoHomePage> {
               padding: const EdgeInsets.all(16.0),
               margin: const EdgeInsetsDirectional.only(top: 24),
               decoration: BoxDecoration(
-                color: const Color(0xFF9395D3),
-                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10), 
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1), // Shadow color
+                    spreadRadius: 4, // How wide the shadow spreads
+                    blurRadius: 6, // How blurry the shadow is
+                    offset: const Offset(0, 3), // Position of the shadow
+                  ),
+                ],
               ),
               child: Row(
-                // mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
                     icon: const Icon(
                       Icons.info_outline,
-                      color: Colors.white,
-                      size: 16,
+                      // color: Colors.white,
+                      size: 20,
                     ),
                     tooltip: 'Edit',
                     padding: EdgeInsets.only(top: 2.0),
@@ -131,22 +119,25 @@ class _MyHomePageState extends State<TodoHomePage> {
                   Center(
                     child: Text(
                       taskTitleArray[index],
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.edit),
                     tooltip: 'Edit',
-                    highlightColor: Colors.white,
+                    highlightColor: Color.fromARGB(50, 0, 0, 0),
                     onPressed: () {
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),
                     tooltip: 'Delete',
-                    highlightColor: Colors.white,
+                    highlightColor: Color.fromARGB(50, 0, 0, 0),
                     onPressed: () {
+                      setState(() {
+                        taskTitleArray.removeAt(index);
+                      });
                     },
                   ),
                 ],
@@ -157,9 +148,9 @@ class _MyHomePageState extends State<TodoHomePage> {
         }
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+        backgroundColor: Color(0xFF9395D3),
         onPressed: () async {
             final result = await Navigator.push(
               context,

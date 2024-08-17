@@ -13,12 +13,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF9395D3)),
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Todo App'),
-      home: TodoApp(),
+      home: TodoApp(), // used todo_app_main.dart file to render initially
     );
   }
 }

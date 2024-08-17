@@ -49,8 +49,8 @@ class _MyWidgetState extends State<AddTask> {
                   border: UnderlineInputBorder(),
                   labelText: 'Title',
                   hintText: 'ABC Client meeting',
-                  hintFadeDuration: Durations.extralong3,
                 ),
+                maxLength: 25,
                 controller: myController,
               ),
             ),
@@ -60,14 +60,14 @@ class _MyWidgetState extends State<AddTask> {
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Details',
-                  hintText: 'client meeting to discuss the requirements',
-                  hintFadeDuration: Durations.extralong3,
+                  hintText: 'Client meeting to discuss the requirements',
                 ),
+                maxLength: 100,
                 controller: myController1,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
               child: SizedBox(
                 width: double.infinity,
                 child: TextButton(
@@ -80,7 +80,7 @@ class _MyWidgetState extends State<AddTask> {
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(16),
                     backgroundColor: const Color(0xFF9395D3), // Background color
-                    overlayColor: const Color.fromARGB(121, 181, 211, 89),
+                    overlayColor: Colors.white,
                     foregroundColor: Colors.white,
                   ),
                   child: const Text('ADD'),
