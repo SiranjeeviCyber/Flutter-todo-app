@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Todo App'),
-      home: TodoApp(), // used todo_app_main.dart file to render initially
+      home: const TodoApp(), // used todo_app_main.dart file to render initially
     );
   }
 }

@@ -28,10 +28,11 @@ class TodoHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<TodoHomePage> {
-  String ? taskTitle;
+  // String ? taskTitle;
   List<String> taskTitleArray = [];
   List<String> taskDetailArray = [];
 
+  // Alert dialog box section starts
   Future<void> _showMyDialog(BuildContext context, int index) async {
     return showDialog<void>(
       context: context,
@@ -51,6 +52,12 @@ class _MyHomePageState extends State<TodoHomePage> {
           ),
           actions: <Widget>[
             TextButton(
+              child: const Text('Done'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
               child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -60,14 +67,14 @@ class _MyHomePageState extends State<TodoHomePage> {
         );
       },
     );
-  }
+  }   // Alert dialog box section ends
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.indigo[100],
       appBar: AppBar(
-        backgroundColor: Color(0xFF9395D3),
+        backgroundColor: const Color(0xFF9395D3),
         centerTitle: true,
         title: Text(widget.title),
         actions: [
@@ -106,12 +113,11 @@ class _MyHomePageState extends State<TodoHomePage> {
                   IconButton(
                     icon: const Icon(
                       Icons.info_outline,
-                      // color: Colors.white,
                       size: 20,
                     ),
-                    tooltip: 'Edit',
-                    padding: EdgeInsets.only(top: 2.0),
-                    highlightColor: Color.fromARGB(50, 0, 0, 0),
+                    tooltip: 'Info',
+                    padding: const EdgeInsets.only(top: 2.0),
+                    highlightColor: const Color.fromARGB(50, 0, 0, 0),
                     onPressed: () {
                       _showMyDialog(context, index);
                     },
@@ -119,21 +125,37 @@ class _MyHomePageState extends State<TodoHomePage> {
                   Center(
                     child: Text(
                       taskTitleArray[index],
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   ),
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.edit),
                     tooltip: 'Edit',
-                    highlightColor: Color.fromARGB(50, 0, 0, 0),
-                    onPressed: () {
+                    highlightColor: const Color.fromARGB(50, 0, 0, 0),
+                    onPressed: () async {
+                      final editResult = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddTask(
+                            taskTitle: taskTitleArray[index],
+                            details: taskDetailArray[index],
+                            buttonLabel: "Update",
+                          )
+                        ),
+                      );
+                      if (editResult != null && editResult is TextData) {
+                        setState(() {
+                          taskTitleArray[index] = editResult.textField1Value;
+                          taskDetailArray[index] = editResult.textField2Value;
+                        });
+                      }
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),
                     tooltip: 'Delete',
-                    highlightColor: Color.fromARGB(50, 0, 0, 0),
+                    highlightColor: const Color.fromARGB(50, 0, 0, 0),
                     onPressed: () {
                       setState(() {
                         taskTitleArray.removeAt(index);
@@ -149,8 +171,7 @@ class _MyHomePageState extends State<TodoHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
-        backgroundColor: Color(0xFF9395D3),
+        backgroundColor: const Color(0xFF9395D3),
         onPressed: () async {
             final result = await Navigator.push(
               context,
@@ -163,7 +184,21 @@ class _MyHomePageState extends State<TodoHomePage> {
               });
             }
           },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        child: const Icon(Icons.add),
+      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home_outlined),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.inventory_rounded),
+      //       label: 'Completed',
+      //     ),
+          
+      //   ],
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
