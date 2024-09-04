@@ -1,6 +1,27 @@
 import 'package:flutter/material.dart';
 import 'add_task.dart';
+import 'empty_state.dart';
+// import 'package:go_router/go_router.dart';
 
+/// The route configuration.
+// final GoRouter _router = GoRouter(
+//   routes: <RouteBase>[
+//     GoRoute(
+//       path: '/',
+//       builder: (BuildContext context, GoRouterState state) {
+//         return const HomeScreen();
+//       },
+//       routes: <RouteBase>[
+//         GoRoute(
+//           path: 'details',
+//           builder: (BuildContext context, GoRouterState state) {
+//             return const DetailsScreen();
+//           },
+//         ),
+//       ],
+//     ),
+//   ],
+// );
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
 
@@ -82,6 +103,9 @@ class _MyHomePageState extends State<TodoHomePage> {
             icon: const Icon(Icons.calendar_month_sharp),
             tooltip: 'Calender view',
             onPressed: () {
+              Navigator.push(
+                context,MaterialPageRoute(builder: (context) => const EmptyState()),
+              );
             },
           ),
         ],
